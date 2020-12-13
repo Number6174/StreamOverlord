@@ -7,10 +7,13 @@ If you do use this program to make money for yourself, please consider supportin
 # Current status
 Prototype quality, not suitable for general use. 
 
-# Future Design Goals
+# Design Goals
 
 Some of these are aspirational and may take a while before they are implemented. If one of them is particularly important to you, create a GitHub Issue requesting priority, or even consider commissioning custom work.
 
+* Low resource usage
+  * All reasonable attempts will be made to keep resource usage low
+  * Add a later client to run on a game PC that just receives events from a streaming PC to dedicate as much of your resources to the game as possible
 * Use an event/listener model
   * Provides stream interaction based upon viewer triggers
 * Testability
@@ -20,7 +23,7 @@ Some of these are aspirational and may take a while before they are implemented.
   * Ordered synchronous queues. Events will be processed in order to completion before moving onto the next
   * Ordered asynchronous queues. Events will be processed as quickly as possible
 * Multiple sources for events
-  * Twitch API Events
+  * [Twitch API](https://dev.twitch.tv/docs/api/) Events
   * Twitch Pubsub Events
   * Streamlabs Tips
   * StreamElements Tips
@@ -41,3 +44,12 @@ Some of these are aspirational and may take a while before they are implemented.
 * Various timers
   * General countdown timers
   * Extensible timers used for marathon type streams where events modify the time remaining
+* Support for special events like Twitch's Hype Train
+* Configuration via JSON
+
+# Developer Information
+
+This project is laid out roughly in accordance to the [Pitchfork conventions](https://github.com/vector-of-bool/pitchfork)
+
+Project dependencies:
+* QT5
