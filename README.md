@@ -7,6 +7,9 @@ If you do use this program to make money for yourself, please consider supportin
 # Current status
 Prototype quality, not suitable for general use. 
 
+[![REUSE status](https://api.reuse.software/badge/github.com/number6174/streamoverlord)](https://api.reuse.software/info/github.com/number6174/streamoverlord)
+
+
 # Design Goals
 
 Some of these are aspirational and may take a while before they are implemented. If one of them is particularly important to you, create a GitHub Issue requesting priority, or even consider commissioning custom work.
@@ -52,4 +55,4 @@ Some of these are aspirational and may take a while before they are implemented.
 This project is laid out roughly in accordance to the [Pitchfork conventions](https://github.com/vector-of-bool/pitchfork)
 
 Project dependencies:
-* QT5
+* QT - Must be separately installed
