@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 Number6174
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # StreamOverlord
 
 A standalone program to help manage interactivity for streamers. It is open source, free for general use, and does not take any portion of your tips or donations.
