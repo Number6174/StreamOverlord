@@ -1,21 +1,27 @@
+// SPDX-FileCopyrightText: 2020 Number6174
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-int main(int argc, char *argv[])
-{
+#include "ui/QMLRegistrations.h"
+
+int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
     QGuiApplication app(argc, argv);
 
+    registerQML();
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/src/ui/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+                if (!obj && url == objUrl)
+                    QCoreApplication::exit(-1);
+            }, Qt::QueuedConnection);
     engine.load(url);
 
     return app.exec();

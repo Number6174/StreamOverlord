@@ -34,3 +34,6 @@
 # CLion stuff
 .idea
 cmake-build-*
+
+# QT Creator
+CMakeLists.txt.user

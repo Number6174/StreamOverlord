@@ -1,0 +1,9 @@
+// SPDX-FileCopyrightText: 2020 Number6174
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#ifndef STREAMOVERLORD_QMLREGISTRATIONS_H
+#define STREAMOVERLORD_QMLREGISTRATIONS_H
+
+void registerQML();
+
+#endif //STREAMOVERLORD_QMLREGISTRATIONS_H

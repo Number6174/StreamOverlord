@@ -1,5 +1,9 @@
+<!-- SPDX-FileCopyrightText: 2020 Number6174 -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <RCC>
     <qresource prefix="src/ui/">
         <file>main.qml</file>
+        <file>EventList.qml</file>
     </qresource>
 </RCC>
