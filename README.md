@@ -55,6 +55,11 @@ Some of these are aspirational and may take a while before they are implemented.
   * Extensible timers used for marathon type streams where events modify the time remaining
 * Support for special events like Twitch's Hype Train
 * Configuration via JSON
+* Ability to interfere with controls
+  * Potentially using [Interception](https://github.com/oblitum/Interception) or [capsicain](https://github.com/cajhin/capsicain)
+  * Swap keyboard inputs, like reverse WASD
+  * Block specific keystrokes, like can only strafe no forwards/backwards
+  * Mouse drift, roughly like a worn out old control stick
 
 # Developer Information
 
