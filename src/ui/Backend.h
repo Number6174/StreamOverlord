@@ -15,11 +15,10 @@ class Backend : public QObject{
 
 public:
     explicit Backend(QObject *parent = nullptr);
-    Q_INVOKABLE QString convertURLtoPath(QUrl url) const;
+    Q_INVOKABLE [[nodiscard]] QString convertURLtoPath(const QUrl& url) const;
     Q_INVOKABLE void defaultDirectorySettings();
-    //bool getStatus();
-    QString getLogDirectory() const;
-    QString getConfigDirectory() const;
+    [[nodiscard]] QString getLogDirectory() const;
+    [[nodiscard]] QString getConfigDirectory() const;
 
 signals:
     void logDirectoryChanged(QString newDir);

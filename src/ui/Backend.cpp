@@ -14,7 +14,7 @@ Backend::Backend(QObject *parent) : QObject(parent) {
     //connect(this, &Backend::logDirectoryChanged, this, &Backend::setLogDirectory);
 }
 
-Q_INVOKABLE QString Backend::convertURLtoPath(QUrl url) const {
+Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {
     return QDir::toNativeSeparators(url.toLocalFile());
 }
 
