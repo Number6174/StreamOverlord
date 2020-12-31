@@ -10,7 +10,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick LinguistTools REQUIRED)
 
 include_directories(.)
 
-add_executable(streamoverlord main.cpp ui/qml.qrc ui/EventModel.cpp ui/EventModel.h ui/QMLRegistrations.cpp ui/QMLRegistrations.h Event.cpp Event.h)
+add_executable(streamoverlord main.cpp ui/qml.qrc ui/EventModel.cpp ui/EventModel.h ui/QMLRegistrations.cpp ui/QMLRegistrations.h Event.cpp Event.h ui/Backend.cpp ui/Backend.h)
 
 target_compile_definitions(streamoverlord
         PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

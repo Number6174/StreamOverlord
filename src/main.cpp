@@ -3,9 +3,8 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QSettings>
-#include <QStandardPaths>
 
+#include "ui/Backend.h"
 #include "ui/QMLRegistrations.h"
 
 int main(int argc, char *argv[]) {
@@ -21,19 +20,9 @@ int main(int argc, char *argv[]) {
     app.setOrganizationDomain("number6174.github.io");
     app.setApplicationName("Stream Overlord");
 
-    // Setup default paths for configuration and log files
-    QSettings settings;
-
-    if (!settings.value("LogDirectory").isValid()) {
-        QString path = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-        path.append("/Stream Overlord/Logs");
-        settings.setValue("logDirectory", path);
-    }
-    if (!settings.value("ConfigDirectory").isValid()) {
-        QString path = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-        path.append("/Stream Overlord/Configuration");
-        settings.setValue("configDirectory", path);
-    }
+    // Startup backend
+    Backend b;
+    qmlRegisterSingletonInstance("StreamOverlord", 1, 0, "Backend", &b);
 
     // Registers custom QML types implemented in C++
     registerQML();
