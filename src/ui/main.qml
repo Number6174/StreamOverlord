@@ -1,147 +1,124 @@
 // SPDX-FileCopyrightText: 2020 Number6174
 // SPDX-License-Identifier: GPL-3.0-or-later
-
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
+import Qt.labs.settings 1.1
 
 import StreamOverlord 1.0
+//import AboutDialog
 
-Window {
+ApplicationWindow {
+    id: window
     width: 640
     height: 480
     visible: true
     title: "Stream Overlord"
 
-    Column {
-        id: rowLayout
-        width: parent.width
-        height: parent.height
+    AboutDialog {
+        id: aboutDialog
+    }
+    DirectoriesDialog {
+        id: directoriesDialog
+    }
 
-        // Log selection
-        Item {
-            id: logPane
-            width: parent.width
-            height: 30
-            Text {
-                id: logFileText
-                text: "Log file: "
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
+    menuBar: MenuBar {
+        Menu {
+            title: "&File"
+            Action {
+                text: "Configure &Directories"
+                onTriggered: directoriesDialog.open()
             }
-            TextInput {
-                id: logFileName
-                height: 14
-                anchors.left: logFileText.right
-                anchors.right: logFileOpenButton.left
-                anchors.verticalCenter: parent.verticalCenter
+
+            Action {
+                text: "&Quit"
+                onTriggered: Qt.quit()
+            }
+        }
+        Menu {
+            title: "&Help"
+            Action {
+                text: "Check for &Updates"
+            }
+            Action {
+                text: "&About"
+
+                onTriggered: aboutDialog.open()
+            }
+        }
+    }
+
+    Settings {
+        property alias x: window.x
+        property alias y: window.y
+        property alias width: window.width
+        property alias height: window.height
+    }
+
+    header: Text {
+        text: "Connection status stuff goes here"
+    }
+
+    RowLayout {
+        anchors.fill: parent
+        ColumnLayout {
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignTop
+
+            Button {
+                text: "Config"
+                Layout.alignment: Qt.AlignHCenter
+                onClicked: loader.setSource("Configuration.qml")
+                //onClicked: loader.setSource("config.qml", {"opacity": 1})
+                //onClicked: loader.source = "config.qml"
             }
             Button {
-                id: logFileOpenButton
-                height: 14
-                text: "Open"
-                icon.name: "document-open"
-                onClicked: fileOpenDialog.open()
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
+                Layout.alignment: Qt.AlignHCenter
+                text: "Main Queue"
+                onClicked: loader.sourceComponent = blue
+            }
+            Button {
+                Layout.alignment: Qt.AlignHCenter
+                text: "Marathon Timer"
+                onClicked: loader.sourceComponent = green
             }
         }
 
-        // Twitch Pane
-        Item {
-            id: twitchPane
-            width: parent.width
-            height: 30
-            Text {
-                id: twitchText
-                text: "Twitch token: "
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-            }
-            TextInput {
-                id: twitchToken
-                height: 14
-                anchors.left: twitchText.right
-                anchors.right: twitchConnectButton.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Button {
-                id: twitchConnectButton
-                height: 14
-                text: "Connect"
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
+        Loader {
+            id: loader
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            source: "Configuration.qml"
         }
+    }
 
+    Component {
+        id: blue
+        Rectangle {
+            anchors.fill: parent
+
+            color: "blue"
+        }
+    }
+    Component {
+        id: green
+        Rectangle {
+            anchors.fill: parent
+
+            color: "green"
+        }
+    }
+
+
+    /*
         // Listview
         EventList {
             width: parent.width
             height: parent.height - twitchPane.height - logPane.height
 
             model: EventModel {}
-                /*ListModel {
-                ListElement {
-                    name: "Bill Smith"
-                    number: "555 3264"
-                }
-                ListElement {
-                    name: "John Brown"
-                    number: "555 8426"
-                }
-                ListElement {
-                    name: "Sam Wise"
-                    number: "555 0473"
-                }
-                ListElement {
-                    name: "Bill Smith"
-                    number: "555 3264"
-                }
-                ListElement {
-                    name: "John Brown"
-                    number: "555 8426"
-                }
-                ListElement {
-                    name: "Sam Wise"
-                    number: "555 0473"
-                }
-                ListElement {
-                    name: "Bill Smith"
-                    number: "555 3264"
-                }
-                ListElement {
-                    name: "John Brown"
-                    number: "555 8426"
-                }
-                ListElement {
-                    name: "Sam Wise"
-                    number: "555 0473"
-                }
-                ListElement {
-                    name: "Bill Smith"
-                    number: "555 3264"
-                }
-                ListElement {
-                    name: "John Brown"
-                    number: "555 8426"
-                }
-                ListElement {
-                    name: "Sam Wise"
-                    number: "555 0473"
-                }
-            }
-            */
         }
-    }
-
-    FileDialog {
-        id: fileOpenDialog
-        title: "Select a log file"
-        folder: shortcuts.documents
-        nameFilters: ["Log file (*.txt *.log)"]
-        onAccepted: {
-            logFileName.text = fileOpenDialog.fileUrl
-        }
-    }
+*/
 }
