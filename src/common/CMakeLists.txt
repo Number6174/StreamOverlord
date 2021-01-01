@@ -4,6 +4,7 @@
 add_library(common
         Event.h Event.cpp
         )
+enable_warnings_for(common)
 
 target_link_libraries(common
         PRIVATE Qt${QT_VERSION_MAJOR}::Core)

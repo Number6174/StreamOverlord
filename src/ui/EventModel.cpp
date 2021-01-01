@@ -6,7 +6,7 @@
 #include <iostream>
 
 int EventModel::rowCount(const QModelIndex &parent) const {
-    return m_items.size();
+    return static_cast<int>(m_items.size());
 }
 
 QVariant EventModel::data(const QModelIndex &index, int role) const {

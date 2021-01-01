@@ -4,7 +4,18 @@
 cmake_minimum_required(VERSION 3.17)
 project(streamoverlord LANGUAGES CXX)
 
+
+# Add path for custom modules
+set(CMAKE_MODULE_PATH
+        ${CMAKE_MODULE_PATH}
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
+        )
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+include(CompilerSetup)
+colorize_output()
 
 add_subdirectory(src)

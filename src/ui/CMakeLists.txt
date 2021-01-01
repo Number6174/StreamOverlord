@@ -7,6 +7,7 @@ add_library(ui
         QMLRegistrations.h QMLRegistrations.cpp
         MainGUI.h MainGUI.cpp
         )
+enable_warnings_for(ui)
 
 target_link_libraries(ui
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)

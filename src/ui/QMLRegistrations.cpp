@@ -5,6 +5,9 @@
 
 #include "EventModel.h"
 
+// Ignore a MSVC warning inside the template
+//#pragma warning(disable:4217)
 void registerQML() {
     qmlRegisterType<EventModel>("StreamOverlord", 1, 0, "EventModel");
+//#pragma warning(default:4217)
 }

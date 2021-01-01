@@ -4,6 +4,7 @@
 add_library(twitch
         TwitchSSO.h TwitchSSO.cpp
         )
+enable_warnings_for(twitch)
 
 target_link_libraries(twitch
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::NetworkAuth)
