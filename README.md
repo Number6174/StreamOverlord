@@ -10,6 +10,8 @@ A standalone program to help manage interactivity for streamers. It is open sour
 
 If you do use this program to make money for yourself, please consider supporting me to ensure the program will be maintained and improved. Direct donations or support on Patreon (forthcoming) are appreciated. Custom comissioned work may also be accepted depending on the project and availability.
 
+Join the [Discord](https://discord.gg/MpN36Fnpf2) if you have any questions or need support.
+
 # Current status
 Prototype quality, not suitable for general use. 
 
@@ -66,4 +68,4 @@ Some of these are aspirational and may take a while before they are implemented.
 This project is laid out roughly in accordance to the [Pitchfork conventions](https://github.com/vector-of-bool/pitchfork)
 
 Project dependencies:
-* QT - Must be separately installed
+* QT - Must be separately installed. Current 5.15.2, will move to 6.x once all used modules are available
