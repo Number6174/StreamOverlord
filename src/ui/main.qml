@@ -17,39 +17,6 @@ ApplicationWindow {
     visible: true
     title: "Stream Overlord"
 
-    AboutDialog {
-        id: aboutDialog
-    }
-    DirectoriesDialog {
-        id: directoriesDialog
-    }
-
-    menuBar: MenuBar {
-        Menu {
-            title: "&File"
-            Action {
-                text: "Configure &Directories"
-                onTriggered: directoriesDialog.open()
-            }
-
-            Action {
-                text: "&Quit"
-                onTriggered: Qt.quit()
-            }
-        }
-        Menu {
-            title: "&Help"
-            Action {
-                text: "Check for &Updates"
-            }
-            Action {
-                text: "&About"
-
-                onTriggered: aboutDialog.open()
-            }
-        }
-    }
-
     Settings {
         property alias x: window.x
         property alias y: window.y

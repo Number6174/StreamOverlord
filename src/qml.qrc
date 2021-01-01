@@ -1,0 +1,14 @@
+<!--
+SPDX-FileCopyrightText: 2021 Number6174
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<RCC>
+    <qresource>
+        <file>ui/main.qml</file>
+        <file>ui/AboutDialog.qml</file>
+        <file>ui/DirectoriesDialog.qml</file>
+        <file>ui/EventList.qml</file>
+        <file>ui/Configuration.qml</file>
+        <file>ui/PasswordField.qml</file>
+    </qresource>
+</RCC>

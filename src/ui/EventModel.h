@@ -8,7 +8,7 @@
 #include <QtQml>
 #include <vector>
 
-#include "Event.h"
+#include "common/Event.h"
 
 class EventModel : public QAbstractListModel {
     Q_OBJECT

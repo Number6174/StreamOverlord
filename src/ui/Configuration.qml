@@ -10,6 +10,13 @@ Pane {
     id: root
     anchors.fill: parent
 
+    AboutDialog {
+        id: aboutDialog
+    }
+    DirectoriesDialog {
+        id: directoriesDialog
+    }
+
     ColumnLayout {
         anchors.fill: parent
         ScrollView {
@@ -21,6 +28,23 @@ Pane {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
+
+                Pane {
+                    Layout.fillWidth: true
+                    RowLayout {
+                        Button {
+                            text: "Directories"
+                            onClicked: directoriesDialog.open()
+                        }
+                        Button {
+                            text: "Check for Updates"
+                        }
+                        Button {
+                            text: "Version Information"
+                            onClicked: aboutDialog.open()
+                        }
+                    }
+                }
 
                 GroupBox {
                     Layout.fillWidth: true
@@ -45,10 +69,17 @@ Pane {
                                 }
                                 PasswordField {
                                     id: twitchToken
-                                    password: "asdf"
+                                    //password: "asdf"
+                                    onPasswordChanged: {
+
+                                        changeNotifier.haveChanges = true
+                                    }
                                 }
                                 Button {
-                                    text: "Obtain Token"
+                                    text: "Obtain"
+                                }
+                                Button {
+                                    text: "Revoke"
                                 }
                             }
                         }
@@ -59,8 +90,17 @@ Pane {
         Pane {
             Layout.fillWidth: true
 
-            Button {
-                text: "Save"
+            RowLayout {
+                Button {
+                    text: "Save"
+                    onClicked: changeNotifier.haveChanges = false
+                }
+
+                Text {
+                    id: changeNotifier
+                    property var haveChanges: false
+                    text: haveChanges ? "Unsaved changes exist" : "No unsaved"
+                }
             }
         }
     }
