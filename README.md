@@ -69,3 +69,9 @@ This project is laid out roughly in accordance to the [Pitchfork conventions](ht
 
 Project dependencies:
 * QT - Must be separately installed. Current 5.15.2, will move to 6.x once all used modules are available
+
+Notes:
+To get things to compile, need to ensure proper QT is visible to CMake, using like
+-DCMAKE_PREFIX_PATH=C:\Qt\5.15.2\msvc2019_64
+and at program execution:
+PATH=C:\Qt\5.15.2\msvc2019_64\bin\;C:\Qt\Tools\OpenSSL\Win_x64\bin

@@ -6,6 +6,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 import Qt.labs.settings 1.1
 
+import StreamOverlord 1.0
+
 Pane {
     id: root
     anchors.fill: parent
@@ -69,14 +71,11 @@ Pane {
                                 }
                                 PasswordField {
                                     id: twitchToken
-                                    //password: "asdf"
-                                    onPasswordChanged: {
-
-                                        changeNotifier.haveChanges = true
-                                    }
+                                    password: Backend.twitchToken
                                 }
                                 Button {
                                     text: "Obtain"
+                                    onClicked: Backend.twitchTokenObtain()
                                 }
                                 Button {
                                     text: "Revoke"
@@ -93,13 +92,6 @@ Pane {
             RowLayout {
                 Button {
                     text: "Save"
-                    onClicked: changeNotifier.haveChanges = false
-                }
-
-                Text {
-                    id: changeNotifier
-                    property var haveChanges: false
-                    text: haveChanges ? "Unsaved changes exist" : "No unsaved"
                 }
             }
         }

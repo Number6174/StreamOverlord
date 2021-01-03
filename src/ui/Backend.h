@@ -6,27 +6,39 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QThread>
+
+#include "twitch/TokenObtainer.h"
+#include "net/NetworkManager.h"
 
 class Backend : public QObject{
     // Register with QT
     Q_OBJECT
     Q_PROPERTY(QString configDirectory READ getConfigDirectory WRITE setConfigDirectory NOTIFY configDirectoryChanged)
     Q_PROPERTY(QString logDirectory READ getLogDirectory WRITE setLogDirectory NOTIFY logDirectoryChanged)
+    Q_PROPERTY(QString twitchToken READ getTwitchToken WRITE setTwitchToken NOTIFY twitchTokenChanged)
 
 public:
     explicit Backend(QObject *parent = nullptr);
+    ~Backend() override;
+    // Note QObjects are not copyable or assignable, so this is not a rule of 5 violation
+
     Q_INVOKABLE [[nodiscard]] QString convertURLtoPath(const QUrl& url) const;
     Q_INVOKABLE void defaultDirectorySettings();
     [[nodiscard]] QString getLogDirectory() const;
     [[nodiscard]] QString getConfigDirectory() const;
+    [[nodiscard]] QString getTwitchToken() const;
+    Q_INVOKABLE void twitchTokenObtain();
 
 signals:
     void logDirectoryChanged(QString newDir);
     void configDirectoryChanged(QString newDir);
+    void twitchTokenChanged(QString newToken);
 
 public slots:
     void setLogDirectory(QString newDir);
     void setConfigDirectory(QString newDir);
+    void setTwitchToken(QString newToken);
 
 private:
 
@@ -34,7 +46,9 @@ private:
     void saveSettings();
     QString m_logDirectory;
     QString m_configDirectory;
-
+    QString m_twitchToken;
+    Twitch::TokenObtainer m_twitchTokenObtainer;
+    QThread m_network;
 };
 
 

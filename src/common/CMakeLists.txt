@@ -3,7 +3,7 @@
 
 add_library(common
         Event.h Event.cpp
-        )
+        NonceGenerator.cpp NonceGenerator.h)
 enable_warnings_for(common)
 
 target_link_libraries(common

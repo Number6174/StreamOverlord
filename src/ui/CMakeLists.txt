@@ -12,4 +12,4 @@ enable_warnings_for(ui)
 target_link_libraries(ui
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
 target_link_libraries(ui
-        PRIVATE common twitch)
+        PRIVATE common net twitch)

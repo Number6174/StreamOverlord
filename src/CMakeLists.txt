@@ -6,11 +6,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick NetworkAuth REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Quick Network NetworkAuth REQUIRED)
 
 include_directories(.)
 
 add_subdirectory(common)
+add_subdirectory(net)
 add_subdirectory(twitch)
 add_subdirectory(ui)
 

@@ -9,9 +9,27 @@
 #include <QSettings>
 #include <QStandardPaths>
 
+#include "net/NetworkManager.h"
+
 Backend::Backend(QObject *parent) : QObject(parent) {
     loadSettings();
     //connect(this, &Backend::logDirectoryChanged, this, &Backend::setLogDirectory);
+    connect(&m_twitchTokenObtainer, &Twitch::TokenObtainer::gotToken, this, &Backend::setTwitchToken);
+
+    // Setup Network Manager in its own thread
+    NetworkManager *worker = new NetworkManager;
+    worker->moveToThread(&m_network);
+    connect(&m_network, &QThread::finished, worker, &QObject::deleteLater);
+    //connect(this, &Controller::operate, worker, &Worker::doWork);
+    //connect(worker, &Worker::resultReady, this, &Controller::handleResults);
+    m_network.start();
+
+
+}
+
+Backend::~Backend() {
+    m_network.quit();
+    m_network.wait();
 }
 
 Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {
@@ -62,3 +80,17 @@ void Backend::saveSettings() {
     settings.setValue("ConfigurationDirectory", m_configDirectory);
     settings.setValue("LogDirectory", m_logDirectory);
 }
+
+QString Backend::getTwitchToken() const {
+    return m_twitchToken;
+}
+
+void Backend::setTwitchToken(QString newToken) {
+    m_twitchToken = std::move(newToken);
+}
+
+void Backend::twitchTokenObtain() {
+    m_twitchTokenObtainer.authenticate();
+}
+
+
