@@ -8,8 +8,6 @@
 
 A standalone program to help manage interactivity for streamers. It is open source, free for general use, and does not take any portion of your tips or donations.
 
-If you do use this program to make money for yourself, please consider supporting me to ensure the program will be maintained and improved. Direct donations or support on Patreon (forthcoming) are appreciated. Custom comissioned work may also be accepted depending on the project and availability.
-
 Join the [Discord](https://discord.gg/MpN36Fnpf2) if you have any questions or need support.
 
 # Current status
