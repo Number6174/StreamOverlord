@@ -50,14 +50,10 @@ Pane {
 
                 GroupBox {
                     Layout.fillWidth: true
-                    label: CheckBox {
-                        id: twitchCheckBox
-                        checked: true
-                        text: "Twitch"
-                    }
+
+                    title: "Twitch"
                     ColumnLayout {
                         anchors.fill: parent
-                        enabled: twitchCheckBox.checked
 
                         // Token
                         Pane {
@@ -67,7 +63,7 @@ Pane {
                                 anchors.fill: parent
 
                                 Text {
-                                    text: "Twitch token: "
+                                    text: "Token: "
                                 }
                                 PasswordField {
                                     id: twitchToken
@@ -75,7 +71,9 @@ Pane {
                                 }
                                 Button {
                                     text: "Obtain"
-                                    onClicked: Backend.twitchTokenObtain()
+                                    onClicked: Qt.openUrlExternally(
+                                                   Backend.getTwitchImplicitOAuthURL(
+                                                       ))
                                 }
                                 Button {
                                     text: "Revoke"

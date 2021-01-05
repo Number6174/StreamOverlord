@@ -5,6 +5,7 @@
 #define STREAMOVERLORD_OAUTHHTTPSERVER_H
 
 #include <QObject>
+#include <QString>
 #include <QTcpServer>
 #include <QUrl>
 
@@ -37,6 +38,9 @@ class OAuthHTTPServer : public QObject{
 public:
     explicit OAuthHTTPServer(QObject *parent = nullptr);
     ~OAuthHTTPServer() override;
+
+signals:
+    void newOAuth(QString path, QVariantMap receivedData);
 
 private slots:
     void newConnection();

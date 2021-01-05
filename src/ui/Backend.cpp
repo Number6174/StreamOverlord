@@ -11,26 +11,21 @@
 
 #include "net/NetworkManager.h"
 
-Backend::Backend(QObject *parent) : QObject(parent) {
+Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_network) {
     loadSettings();
-    //connect(this, &Backend::logDirectoryChanged, this, &Backend::setLogDirectory);
-    connect(&m_twitchTokenObtainer, &Twitch::TokenObtainer::gotToken, this, &Backend::setTwitchToken);
 
-    // Setup Network Manager in its own thread
-    NetworkManager *worker = new NetworkManager;
-    worker->moveToThread(&m_network);
-    connect(&m_network, &QThread::finished, worker, &QObject::deleteLater);
-    //connect(this, &Controller::operate, worker, &Worker::doWork);
-    //connect(worker, &Worker::resultReady, this, &Controller::handleResults);
-    m_network.start();
-
-
+    // Wire up Twitch::TokenManager
+    connect(&m_network, SIGNAL(newOAuth(QString, QVariantMap)),
+            &m_twitchTokenManager, SLOT(newOAuth(QString, QVariantMap)));
+    connect(&m_twitchTokenManager, SIGNAL(accessTokenChanged(QString)),
+            this, SIGNAL(twitchTokenChanged(QString)));
 }
-
+/*
 Backend::~Backend() {
     m_network.quit();
     m_network.wait();
 }
+ */
 
 Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {
     return QDir::toNativeSeparators(url.toLocalFile());
@@ -82,15 +77,15 @@ void Backend::saveSettings() {
 }
 
 QString Backend::getTwitchToken() const {
-    return m_twitchToken;
+    return m_twitchTokenManager.getAccessToken();
 }
 
 void Backend::setTwitchToken(QString newToken) {
-    m_twitchToken = std::move(newToken);
+    m_twitchTokenManager.setAccessToken(newToken);
 }
 
-void Backend::twitchTokenObtain() {
-    m_twitchTokenObtainer.authenticate();
+QUrl Backend::getTwitchImplicitOAuthURL() {
+    return m_twitchTokenManager.getImplicitOAuthURL();
 }
 
 

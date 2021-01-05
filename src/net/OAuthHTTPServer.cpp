@@ -70,10 +70,6 @@ void OAuthHTTPServer::readyRead(QTcpSocket *socket) {
 }
 
 void OAuthHTTPServer::answerClient(QTcpSocket *socket, const QUrl &url) {
-    qDebug() << "About to respond to " << url.toString();
-    qDebug() << "Path: " << url.path();
-    qDebug() << "Query: " << url.hasQuery() << url.query();
-    qDebug() << "Fragment: " << url.hasFragment() << url.fragment();
     if (url.path() == "/twitchoauth" && !url.hasQuery()) {
         // What we want is currently a fragment in the URL
         answerClientTwitchFragmentToQuery(socket);
@@ -136,18 +132,14 @@ void OAuthHTTPServer::answerClientTwitchAJAX(QTcpSocket *socket) {
 }
 
 void OAuthHTTPServer::emitQuery(const QUrl &url) {
+    // Convert the query components to a map and emit
     QVariantMap receivedData;
     const QUrlQuery query(url.query());
     const auto items = query.queryItems();
     for (const auto &item : items)
         receivedData.insert(item.first, item.second);
 
-    qDebug() << "About to emit QVariantMap:";
-    for (const auto &item : items)
-        qDebug() << item.first << ": " << item.second;
-
-
-    //Q_EMIT q->callbackReceived(receivedData);
+    emit newOAuth(url.path(), receivedData);
 }
 
 bool OAuthHTTPServer::QHttpRequest::readMethod(QTcpSocket *socket) {

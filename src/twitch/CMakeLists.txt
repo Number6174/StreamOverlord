@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 add_library(twitch
-        TokenObtainer.h TokenObtainer.cpp
-        )
+        TokenManager.h TokenManager.cpp
+        OAuthScopes.cpp OAuthScopes.h)
 enable_warnings_for(twitch)
 
 # Note: This is intentionally not private because this library is just a

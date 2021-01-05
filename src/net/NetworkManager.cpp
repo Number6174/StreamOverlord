@@ -6,5 +6,8 @@
 #include "net/OAuthHTTPServer.h"
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent),
-    oAuthServer(new OAuthHTTPServer(this)) {
+                                                  oAuthServer(new OAuthHTTPServer(this)) {
+    // Signal to Signal
+    connect(oAuthServer, SIGNAL(newOAuth(QString, QVariantMap)),
+            this, SIGNAL(newOAuth(QString, QVariantMap)));
 }

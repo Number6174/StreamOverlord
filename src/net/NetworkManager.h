@@ -5,6 +5,8 @@
 #define STREAMOVERLORD_NETWORKMANAGER_H
 
 #include <QObject>
+#include <QString>
+#include <QVariant>
 
 // Forward declare is good enough here
 class OAuthHTTPServer;
@@ -13,6 +15,9 @@ class NetworkManager : public QObject {
     Q_OBJECT;
 public:
     explicit NetworkManager(QObject *parent = nullptr);
+
+signals:
+    void newOAuth(QString path, QVariantMap receivedData);
 
 private:
     OAuthHTTPServer *oAuthServer;
