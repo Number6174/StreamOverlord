@@ -1,8 +1,8 @@
-<!--
-SPDX-FileCopyrightText: 2020 Number6174
 
-SPDX-License-Identifier: GPL-3.0-or-later
--->
+[comment]: # (SPDX-FileCopyrightText: 2021 Number6174)
+
+[comment]: # (SPDX-License-Identifier: CC0-1.0)
+
 
 # StreamOverlord
 
