@@ -1,8 +1,3 @@
-
-[comment]: # (SPDX-FileCopyrightText: 2021 Number6174)
-
-[comment]: # (SPDX-License-Identifier: CC0-1.0)
-
 # Stream Overlord 0.0.1
 
 First released version
