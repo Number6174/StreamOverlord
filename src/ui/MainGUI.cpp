@@ -19,7 +19,7 @@ int mainGUI(int argc, char **argv) {
     // This sets up storing a couple settings on Windows in the registry at
     // HKEY_CURRENT_USER\SOFTWARE\Number6174\Stream Overlord
     app.setOrganizationName("Number6174");
-    app.setOrganizationDomain("number6174.github.io");
+    app.setOrganizationDomain("streamoverlord.com");
     app.setApplicationName("Stream Overlord");
 
     // Startup backend
