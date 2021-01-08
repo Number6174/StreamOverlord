@@ -10,6 +10,9 @@
 #include <QStandardPaths>
 
 #include "net/NetworkManager.h"
+#include "common/ConfigManager.h"
+
+#include <QDebug>
 
 Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_network) {
     loadSettings();
@@ -61,6 +64,7 @@ void Backend::setLogDirectory(QString newDir) {
 }
 
 void Backend::loadSettings() {
+    // Load directories from QSettings, defaulting if not present
     QSettings settings;
     if (!settings.value("ConfigurationDirectory").isValid() || !settings.value("LogDirectory").isValid()) {
         defaultDirectorySettings();
@@ -81,11 +85,27 @@ QString Backend::getTwitchToken() const {
 }
 
 void Backend::setTwitchToken(QString newToken) {
+    qDebug() << "Set twitch token to " << newToken;
     m_twitchTokenManager.setAccessToken(newToken);
+    emit twitchTokenChanged(newToken);
 }
 
 QUrl Backend::getTwitchImplicitOAuthURL() {
     return m_twitchTokenManager.getImplicitOAuthURL();
+}
+
+void Backend::readConfiguration() {
+    // TokenStorage
+    Common::TokenStorage ts;
+    Common::loadTokenStorage(ts);
+    setTwitchToken(ts.twitchAccessToken);
+}
+void Backend::writeConfiguration() {
+    qDebug() << "backend::writeConfiguration";
+    // TokenStorage
+    Common::TokenStorage ts;
+    ts.twitchAccessToken = getTwitchToken();
+    Common::writeTokenStorage(ts);
 }
 
 

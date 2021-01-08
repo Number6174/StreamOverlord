@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 add_library(common
+        ConfigManager.cpp ConfigManager.h
         Event.h Event.cpp
         NonceGenerator.cpp NonceGenerator.h)
 enable_warnings_for(common)

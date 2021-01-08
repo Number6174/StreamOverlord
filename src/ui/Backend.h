@@ -11,6 +11,7 @@
 #include "twitch/TokenManager.h"
 #include "net/NetworkManager.h"
 
+
 class Backend : public QObject{
     // Register with QT
     Q_OBJECT
@@ -29,6 +30,8 @@ public:
     [[nodiscard]] QString getConfigDirectory() const;
     [[nodiscard]] QString getTwitchToken() const;
     Q_INVOKABLE QUrl getTwitchImplicitOAuthURL();
+    Q_INVOKABLE void readConfiguration();
+    Q_INVOKABLE void writeConfiguration();
 
 signals:
     void logDirectoryChanged(QString newDir);
@@ -47,6 +50,7 @@ private:
     QString m_logDirectory;
     QString m_configDirectory;
     Twitch::TokenManager m_twitchTokenManager;
+
     NetworkManager m_network;
 };
 

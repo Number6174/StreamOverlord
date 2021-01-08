@@ -65,10 +65,18 @@ Pane {
                                 Text {
                                     text: "Token: "
                                 }
-                                PasswordField {
+                                TextInput {
                                     id: twitchToken
-                                    password: Backend.twitchToken
+                                    echoMode: twitchReveal.pressed ? TextInput.Normal : TextInput.Password
+                                    Layout.fillWidth: true
+                                    text: Backend.twitchToken
+                                    onEditingFinished: Backend.twitchToken = twitchToken.text
                                 }
+                                Button {
+                                    id: twitchReveal
+                                    text: "Reveal"
+                                }
+
                                 Button {
                                     text: "Obtain"
                                     onClicked: Qt.openUrlExternally(
@@ -90,6 +98,11 @@ Pane {
             RowLayout {
                 Button {
                     text: "Save"
+                    onClicked: Backend.writeConfiguration()
+                }
+                Button {
+                    text: "Reload"
+                    onClicked: Backend.readConfiguration()
                 }
             }
         }
