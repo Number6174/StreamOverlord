@@ -33,6 +33,9 @@ public:
     Q_INVOKABLE void readConfiguration();
     Q_INVOKABLE void writeConfiguration();
 
+    static QString getDefaultLogDirectory();
+    static QString getDefaultConfigDirectory();
+
 signals:
     void logDirectoryChanged(QString newDir);
     void configDirectoryChanged(QString newDir);

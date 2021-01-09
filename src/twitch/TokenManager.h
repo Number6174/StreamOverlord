@@ -8,6 +8,8 @@
 #include <QUrl>
 #include <QVariant>
 
+#include <spdlog/spdlog.h>
+
 #include "OAuthScopes.h"
 #include "net/NetworkManager.h"
 
@@ -36,7 +38,7 @@ namespace Twitch {
         QString access_token;
         QVector<Scope> scope;
         NetworkManager *netman;
-
+        std::shared_ptr<spdlog::logger> logger;
     };
 }
 

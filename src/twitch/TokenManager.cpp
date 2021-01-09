@@ -7,15 +7,14 @@
 #include <QDir>
 #include <QUrl>
 #include <QUrlQuery>
-
-
 #include <QDebug>
-#include <utility>
 
 #include "common/NonceGenerator.h"
 
+
 namespace Twitch {
-    TokenManager::TokenManager(NetworkManager *n, QObject *parent) : QObject(parent), netman(n) {
+    TokenManager::TokenManager(NetworkManager *n, QObject *parent) : QObject(parent), netman(n),
+                                                                     logger(spdlog::get("twitch")) {
     }
 
     QUrl TokenManager::getImplicitOAuthURL() const {
@@ -32,6 +31,8 @@ namespace Twitch {
         params.addQueryItem("state", state);
 
         authUri.setQuery(params);
+
+        logger->info("Twith OAuth URL: {}", authUri.toString().toStdString());
 
         return authUri;
     }
@@ -56,13 +57,13 @@ namespace Twitch {
         // Ensure the state matches
         if (state != receivedData["state"]) {
             // Something went wrong
-            qDebug() << "Received OAuth response but state didn't match";
-            //return;
+            logger->warn("Received OAuth response but state didn't match");
+            return;
         }
 
+        logger->info("Received access token");
         access_token = receivedData["access_token"].toString();
         emit accessTokenChanged(access_token);
-        //qDebug() << "Here";
     }
 
     void TokenManager::revalidateAuthToken() {

@@ -17,5 +17,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CompilerSetup)
 colorize_output()
+include(GetSpdlog)
 
 add_subdirectory(src)

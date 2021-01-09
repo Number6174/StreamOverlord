@@ -69,6 +69,7 @@ Pane {
                                     id: twitchToken
                                     echoMode: twitchReveal.pressed ? TextInput.Normal : TextInput.Password
                                     Layout.fillWidth: true
+                                    clip: true
                                     text: Backend.twitchToken
                                     onEditingFinished: Backend.twitchToken = twitchToken.text
                                 }

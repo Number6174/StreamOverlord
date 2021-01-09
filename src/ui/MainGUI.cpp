@@ -5,7 +5,9 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QSettings>
 
+#include "common/Logging.h"
 #include "ui/Backend.h"
 #include "ui/QMLRegistrations.h"
 
@@ -21,6 +23,16 @@ int mainGUI(int argc, char **argv) {
     app.setOrganizationName("Number6174");
     app.setOrganizationDomain("streamoverlord.com");
     app.setApplicationName("Stream Overlord");
+
+    // Sets defaults for log/config directories if needed
+    QSettings settings;
+    if (!settings.value("ConfigurationDirectory").isValid())
+        settings.setValue("ConfigurationDirectory", Backend::getDefaultConfigDirectory());
+    if (!settings.value("LogDirectory").isValid())
+        settings.setValue("LogDirectory", Backend::getDefaultLogDirectory());
+
+    // Setup log files
+    Common::setupLogging();
 
     // Startup backend
     Backend b;

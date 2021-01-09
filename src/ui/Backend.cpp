@@ -9,13 +9,12 @@
 #include <QSettings>
 #include <QStandardPaths>
 
-#include "net/NetworkManager.h"
 #include "common/ConfigManager.h"
-
-#include <QDebug>
 
 Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_network) {
     loadSettings();
+
+    readConfiguration();
 
     // Wire up Twitch::TokenManager
     connect(&m_network, SIGNAL(newOAuth(QString, QVariantMap)),
@@ -23,22 +22,14 @@ Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_net
     connect(&m_twitchTokenManager, SIGNAL(accessTokenChanged(QString)),
             this, SIGNAL(twitchTokenChanged(QString)));
 }
-/*
-Backend::~Backend() {
-    m_network.quit();
-    m_network.wait();
-}
- */
 
 Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {
     return QDir::toNativeSeparators(url.toLocalFile());
 }
 
 Q_INVOKABLE void Backend::defaultDirectorySettings() {
-    m_configDirectory = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    m_configDirectory.append("/Stream Overlord/Configuration");
-    m_logDirectory = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    m_logDirectory.append("/Stream Overlord/Logs");
+    m_configDirectory = getDefaultConfigDirectory();
+    m_logDirectory = getDefaultLogDirectory();
     saveSettings();
     emit(configDirectoryChanged(m_configDirectory));
     emit(logDirectoryChanged(m_logDirectory));
@@ -64,14 +55,10 @@ void Backend::setLogDirectory(QString newDir) {
 }
 
 void Backend::loadSettings() {
-    // Load directories from QSettings, defaulting if not present
+    // Load directories from QSettings
     QSettings settings;
-    if (!settings.value("ConfigurationDirectory").isValid() || !settings.value("LogDirectory").isValid()) {
-        defaultDirectorySettings();
-    } else {
-        m_configDirectory = settings.value("ConfigurationDirectory").toString();
-        m_logDirectory = settings.value("LogDirectory").toString();
-    }
+    m_configDirectory = settings.value("ConfigurationDirectory").toString();
+    m_logDirectory = settings.value("LogDirectory").toString();
 }
 
 void Backend::saveSettings() {
@@ -85,7 +72,6 @@ QString Backend::getTwitchToken() const {
 }
 
 void Backend::setTwitchToken(QString newToken) {
-    qDebug() << "Set twitch token to " << newToken;
     m_twitchTokenManager.setAccessToken(newToken);
     emit twitchTokenChanged(newToken);
 }
@@ -101,11 +87,17 @@ void Backend::readConfiguration() {
     setTwitchToken(ts.twitchAccessToken);
 }
 void Backend::writeConfiguration() {
-    qDebug() << "backend::writeConfiguration";
     // TokenStorage
     Common::TokenStorage ts;
     ts.twitchAccessToken = getTwitchToken();
     Common::writeTokenStorage(ts);
 }
 
+QString Backend::getDefaultLogDirectory() {
+    return QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0].append("/Stream Overlord/Logs");
+}
 
+QString Backend::getDefaultConfigDirectory() {
+    return QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0].append(
+            "/Stream Overlord/Configuration");
+}

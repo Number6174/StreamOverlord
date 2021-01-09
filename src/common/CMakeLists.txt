@@ -4,8 +4,10 @@
 add_library(common
         ConfigManager.cpp ConfigManager.h
         Event.h Event.cpp
-        NonceGenerator.cpp NonceGenerator.h)
+        NonceGenerator.cpp NonceGenerator.h
+        Logging.cpp Logging.h)
 enable_warnings_for(common)
 
 target_link_libraries(common
-        PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+        PRIVATE Qt${QT_VERSION_MAJOR}::Core
+        spdlog::spdlog)

@@ -9,6 +9,8 @@
 #include <QTcpServer>
 #include <QUrl>
 
+#include <spdlog/spdlog.h>
+
 // Significant portions of this class are based upon QOAuthHttpServerReplyHandler
 // from QT's networkauth module licensed under GPL3+
 
@@ -89,6 +91,7 @@ private:
         QMap<QByteArray, QByteArray> headers;
     };
     QMap<QTcpSocket *, QHttpRequest> clients;
+    std::shared_ptr<spdlog::logger> logger;
 };
 
 

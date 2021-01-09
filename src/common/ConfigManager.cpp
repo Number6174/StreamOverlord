@@ -9,23 +9,26 @@
 #include <QJsonObject>
 #include <QSettings>
 
+#include <spdlog/spdlog.h>
+
 #include <QDebug>
 
 Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
+    auto logger = spdlog::get("config");
     // Determine the file to load using the config directory from QSettings
     QSettings settings;
 
     auto directory = settings.value("ConfigurationDirectory").toString();
     auto filename = QDir::cleanPath(directory + "/tokens.json");
 
-    qDebug() << "file: " << filename;
+    logger->info("Loading tokens from {}", filename.toStdString());
 
     // Create the file
     QFile file(filename);
 
     // Verify file exists
     if (!file.exists()) {
-        qDebug() << "Config file not found: " << filename;
+        logger->info("Token file not found");
         return LoadTokenResult::FileNotFound;
     }
 
@@ -39,12 +42,12 @@ Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
     auto doc = QJsonDocument::fromJson(contents, &jsonParseError);
 
     if (doc.isEmpty()) {
-        qDebug() << "Parse error: " << jsonParseError.errorString();
+        logger->info("Parse error: {}", jsonParseError.errorString().toStdString());
         return LoadTokenResult::InvalidFormat;
     }
 
     if (!doc.isObject()) {
-        qDebug() << "Parse error: Not a JSON object";
+        logger->info("Parse error: Not a JSON object");
         return LoadTokenResult::InvalidFormat;
     }
 
@@ -53,7 +56,7 @@ Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
     // Load Twitch key
     auto twitch = obj["twitch"];
     if (twitch.isUndefined()) {
-        qDebug() << "Twitch token not present";
+        logger->info("Twitch token not present");
         return LoadTokenResult::InvalidFormat;
     }
     ts.twitchAccessToken = twitch.toString();
@@ -64,6 +67,7 @@ Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
 }
 
 Common::WriteTokenResult Common::writeTokenStorage(const Common::TokenStorage &ts) {
+    auto logger = spdlog::get("config");
     // Determine the file to load using the config directory from QSettings
     QSettings settings;
 
@@ -74,7 +78,7 @@ Common::WriteTokenResult Common::writeTokenStorage(const Common::TokenStorage &t
     QDir qdir;
 
     if (!qdir.mkpath(directory)) {
-        qDebug() << "Configuration directory does not exist and could not be created";
+        logger->error("Configuration directory {} does not exist and could not be created", directory.toStdString());
         return WriteTokenResult::CantCreateDir;
     }
 
@@ -82,7 +86,6 @@ Common::WriteTokenResult Common::writeTokenStorage(const Common::TokenStorage &t
     QJsonObject obj;
 
     obj["twitch"] = ts.twitchAccessToken;
-    qDebug() << "Stored access token as " << ts.twitchAccessToken;
 
     QJsonDocument jsonDocument;
     jsonDocument.setObject(obj);
@@ -92,14 +95,14 @@ Common::WriteTokenResult Common::writeTokenStorage(const Common::TokenStorage &t
     file.open(QIODevice::WriteOnly);
 
     if (!file.isWritable()) {
-        qDebug() << "Cannot open " << filename << " for writing";
+        logger->error("Cannot open {} for writing", filename.toStdString());
         return WriteTokenResult::NotWritable;
     }
 
     auto bytes = file.write(jsonDocument.toJson(QJsonDocument::JsonFormat::Indented));
 
     if (bytes == -1) {
-        qDebug() << "Error writing: " << file.errorString();
+        logger->error("Error writing: {}", file.errorString().toStdString());
         return WriteTokenResult::ErrorWriting;
     }
 

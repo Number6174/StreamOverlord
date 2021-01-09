@@ -12,7 +12,10 @@ target_link_libraries(twitch PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Network
-        Qt${QT_VERSION_MAJOR}::NetworkAuth)
+        Qt${QT_VERSION_MAJOR}::NetworkAuth
+        common
+        spdlog::spdlog)
 
-target_link_libraries(twitch PRIVATE
-        common)
+#target_link_libraries(twitch PRIVATE
+#        common
+#        spdlog::spdlog)

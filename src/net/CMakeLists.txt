@@ -8,7 +8,8 @@ enable_warnings_for(net)
 
 # Note: This is intentionally not private because this library is just a
 # mini static one for use in this project only
-target_link_libraries(net PRIVATE
+target_link_libraries(net PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
-        Qt${QT_VERSION_MAJOR}::Network)
+        Qt${QT_VERSION_MAJOR}::Network
+        spdlog::spdlog)
