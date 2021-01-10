@@ -15,7 +15,7 @@ add_subdirectory(net)
 add_subdirectory(twitch)
 add_subdirectory(ui)
 
-add_executable(streamoverlord main.cpp qml.qrc)
+add_executable(streamoverlord main.cpp dist.qrc qml.qrc)
 enable_warnings_for(streamoverlord)
 
 target_compile_definitions(streamoverlord

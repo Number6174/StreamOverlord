@@ -5,11 +5,14 @@ import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
+import StreamOverlord 1.0
+
 Dialog {
     id: root
     width: 640
     height: 480
     title: "About Stream Overlord"
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -25,15 +28,10 @@ Dialog {
                 text: "Changes: "
             }
             ComboBox {
-                model: ListModel {
-                    id: versions
-                    ListElement {
-                        text: "0.0.1"
-                    }
-                }
-                //width: 200
-                onCurrentIndexChanged: getChanges(versions.get(
-                                                      currentIndex).text)
+                id: versions
+                model: ChangesModel {}
+                textRole: "versionNumber"
+                onCurrentIndexChanged: changesText.text = versions.model.getURIContents(currentIndex)
             }
         }
 
@@ -51,21 +49,6 @@ Dialog {
                 readOnly: true
             }
         }
-    }
-
-    function getChanges(version) {
-        var xmlhttp = new XMLHttpRequest()
-        var url = "https://raw.githubusercontent.com/Number6174/StreamOverlord/main/dist/changes-"
-                + version + ".md"
-
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == XMLHttpRequest.DONE
-                    && xmlhttp.status == 200) {
-                changesText.text = xmlhttp.responseText
-            }
-        }
-        xmlhttp.open("GET", url, true)
-        xmlhttp.send()
     }
 
     standardButtons: StandardButton.Close

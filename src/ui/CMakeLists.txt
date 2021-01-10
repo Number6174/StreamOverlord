@@ -6,7 +6,7 @@ add_library(ui
         EventModel.h EventModel.cpp
         QMLRegistrations.h QMLRegistrations.cpp
         MainGUI.h MainGUI.cpp
-        )
+        ChangesModel.cpp ChangesModel.h)
 enable_warnings_for(ui)
 
 target_link_libraries(ui
