@@ -74,6 +74,8 @@ Common::WriteTokenResult Common::writeTokenStorage(const Common::TokenStorage &t
     auto directory = settings.value("ConfigurationDirectory").toString();
     auto filename = QDir::cleanPath(directory + "/tokens.json");
 
+    logger->info("Writing tokens to {}", filename.toStdString());
+
     // Ensure directory exists
     QDir qdir;
 
