@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE QUrl getTwitchImplicitOAuthURL();
     Q_INVOKABLE void readConfiguration();
     Q_INVOKABLE void writeConfiguration();
+    Q_INVOKABLE [[nodiscard]] QString getCurrentVersion() const;
 
     static QString getDefaultLogDirectory();
     static QString getDefaultConfigDirectory();

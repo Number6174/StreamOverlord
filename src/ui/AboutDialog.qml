@@ -17,7 +17,7 @@ Dialog {
         anchors.fill: parent
 
         Text {
-            text: "Stream Overlord 0.0.1"
+            text: "Stream Overlord " + Backend.getCurrentVersion()
         }
         Text {
             text: "Copyright 2021 Number6174"

@@ -10,6 +10,7 @@
 #include <QStandardPaths>
 
 #include "common/ConfigManager.h"
+#include "common/VersionInfo.h"
 
 Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_network) {
     loadSettings();
@@ -91,6 +92,10 @@ void Backend::writeConfiguration() {
     Common::TokenStorage ts;
     ts.twitchAccessToken = getTwitchToken();
     Common::writeTokenStorage(ts);
+}
+
+QString Backend::getCurrentVersion() const {
+    return Common::getCurrentVersion();
 }
 
 QString Backend::getDefaultLogDirectory() {

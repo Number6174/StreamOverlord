@@ -11,6 +11,8 @@
 
 #include <QSettings>
 
+#include "VersionInfo.h"
+
 namespace {
     void qtMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
         QByteArray localMsg = msg.toLocal8Bit();
@@ -60,7 +62,7 @@ void Common::setupLogging() {
         spdlog::register_logger(debug_logger);
         debug_logger->set_level(spdlog::level::debug);
 
-        debug_logger->debug("Program startup");
+        debug_logger->debug("Program startup. Version {}", getCurrentVersion().toStdString());
 
         // For logging QT log events
         auto qt_logger = std::make_shared<spdlog::logger>("qt", begin(sinks), end(sinks));

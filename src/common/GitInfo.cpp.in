@@ -1,0 +1,8 @@
+// SPDX-FileCopyrightText: 2021 Number6174
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "common/GitInfo.h"
+
+namespace Common {
+    const char GIT_VERSION[] = "@GIT_VERSION@";
+}
