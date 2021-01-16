@@ -12,7 +12,7 @@
 class OAuthHTTPServer;
 
 class NetworkManager : public QObject {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     explicit NetworkManager(QObject *parent = nullptr);
 

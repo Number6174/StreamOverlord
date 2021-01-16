@@ -16,7 +16,7 @@ std::string common::generateOAuthState(int length) {
     // Setup PRNG
     std::random_device rnd;
     std::mt19937 prng{rnd()};
-    std::uniform_int_distribution<int> dist(0, static_cast<int>(alphabet.size()));
+    std::uniform_int_distribution<std::string::size_type> dist(0, alphabet.size());
 
     // Generate nonce
     std::string result;

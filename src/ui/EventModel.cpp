@@ -6,6 +6,7 @@
 #include <iostream>
 
 int EventModel::rowCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent);
     return static_cast<int>(m_items.size());
 }
 
@@ -14,7 +15,7 @@ QVariant EventModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= m_items.size())
         return QVariant();
 
-    const auto &item = m_items[index.row()];
+    const auto &item = m_items[static_cast<decltype(m_items)::size_type>(index.row())];
 
     if (role == EventRoles::TimeRole)
         return item.getTime();
