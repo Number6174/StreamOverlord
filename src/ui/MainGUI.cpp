@@ -33,6 +33,7 @@ int mainGUI(int argc, char **argv) {
 
     // Setup log files
     Common::setupLogging();
+    QObject::connect(&app, &QCoreApplication::aboutToQuit, Common::logShutdown);
 
     // Startup backend
     Backend b;

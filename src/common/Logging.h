@@ -6,6 +6,7 @@
 
 namespace Common {
     void setupLogging();
+    void logShutdown();
 }
 
 #endif //STREAMOVERLORD_LOGGING_H

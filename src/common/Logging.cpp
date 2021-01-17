@@ -62,7 +62,7 @@ void Common::setupLogging() {
         spdlog::register_logger(debug_logger);
         debug_logger->set_level(spdlog::level::debug);
 
-        debug_logger->debug("Program startup. Version {}", getCurrentVersion().toStdString());
+        debug_logger->info("Program startup. Version {}", getCurrentVersion().toStdString());
 
         // For logging QT log events
         auto qt_logger = std::make_shared<spdlog::logger>("qt", begin(sinks), end(sinks));
@@ -90,4 +90,9 @@ void Common::setupLogging() {
 
     // Redirect QT logs to use our logs
     qInstallMessageHandler(qtMessageOutput);
+}
+
+void Common::logShutdown() {
+    auto logger = spdlog::get("debug");
+    logger->info("Program shutdown");
 }
