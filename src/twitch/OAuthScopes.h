@@ -17,6 +17,8 @@ namespace Twitch {
         channel_manage_broadcast,
         channel_manage_extensions,
         channel_manage_redemptions,
+        channel_manage_videos,
+        channel_read_editors,
         channel_read_hype_train,
         channel_read_redemptions,
         channel_read_stream_key,
@@ -25,6 +27,8 @@ namespace Twitch {
         moderation_read,
         user_edit,
         user_edit_follows,
+        user_manage_blocked_users,
+        user_read_blocked_users,
         user_read_broadcast,
         user_read_email,
         // Chat and PubSub

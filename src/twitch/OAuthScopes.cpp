@@ -19,6 +19,10 @@ QString Twitch::scopeName(Twitch::Scope s) {
             return "channel:manage:extensions";
         case Scope::channel_manage_redemptions:
             return "channel:manage:redemptions";
+        case Scope::channel_manage_videos:
+            return "channel:manage:videos";
+        case Scope::channel_read_editors:
+            return "channel:read_editors";
         case Scope::channel_read_hype_train:
             return "channel:read:hype_train";
         case Scope::channel_read_redemptions:
@@ -35,6 +39,10 @@ QString Twitch::scopeName(Twitch::Scope s) {
             return "user:edit";
         case Scope::user_edit_follows:
             return "user:edit:follows";
+        case Scope::user_manage_blocked_users:
+            return "user:manage:blocked_users";
+        case Scope::user_read_blocked_users:
+            return "user:read:blocked_users";
         case Scope::user_read_broadcast:
             return "user:read:broadcast";
         case Scope::user_read_email:
@@ -69,6 +77,10 @@ QString Twitch::scopeDescription(Twitch::Scope s) {
             return "Manage your channel’s extension configuration, including activating extensions.";
         case Scope::channel_manage_redemptions:
             return "Manage Channel Points custom rewards and their redemptions on a channel.";
+        case Scope::channel_manage_videos:
+            return "Manage a channel’s videos, including deleting videos.";
+        case Scope::channel_read_editors:
+            return "View a list of users with the editor role for a channel.";
         case Scope::channel_read_hype_train:
             return "Gets the most recent hype train on a channel.";
         case Scope::channel_read_redemptions:
@@ -85,6 +97,10 @@ QString Twitch::scopeDescription(Twitch::Scope s) {
             return "Manage a user object.";
         case Scope::user_edit_follows:
             return "Edit your follows.";
+        case Scope::user_manage_blocked_users:
+            return "Manage the block list of a user.";
+        case Scope::user_read_blocked_users:
+            return "View the block list of a user.";
         case Scope::user_read_broadcast:
             return "View your broadcasting configuration, including extension configurations.";
         case Scope::user_read_email:
