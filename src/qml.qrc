@@ -6,8 +6,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
     <qresource>
         <file>ui/main.qml</file>
         <file>ui/AboutDialog.qml</file>
+        <file>ui/Configuration.qml</file>
         <file>ui/DirectoriesDialog.qml</file>
         <file>ui/EventList.qml</file>
-        <file>ui/Configuration.qml</file>
+        <file>ui/WarningDialog.qml</file>
     </qresource>
 </RCC>

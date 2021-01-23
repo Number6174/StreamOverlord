@@ -22,6 +22,8 @@ Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_net
             &m_twitchTokenManager, SLOT(newOAuth(QString, QVariantMap)));
     connect(&m_twitchTokenManager, SIGNAL(accessTokenChanged(QString)),
             this, SIGNAL(twitchTokenChanged(QString)));
+    connect(&m_network, SIGNAL(failedOAuth(QString)),
+            this, SLOT(handleOAuthError(QString)));
 }
 
 Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {
@@ -75,6 +77,11 @@ QString Backend::getTwitchToken() const {
 void Backend::setTwitchToken(QString newToken) {
     m_twitchTokenManager.setAccessToken(newToken);
     emit twitchTokenChanged(newToken);
+}
+
+void Backend::handleOAuthError(QString message) {
+    emit warningDialog("An error occurred while obtaining an OAuth token from "
+                       + message + ". Please re-obtain.");
 }
 
 QUrl Backend::getTwitchImplicitOAuthURL() {

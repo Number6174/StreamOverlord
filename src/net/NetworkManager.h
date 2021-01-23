@@ -18,6 +18,7 @@ public:
 
 signals:
     void newOAuth(QString path, QVariantMap receivedData);
+    void failedOAuth(QString source);
 
 private:
     OAuthHTTPServer *oAuthServer;

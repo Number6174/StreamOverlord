@@ -43,6 +43,7 @@ public:
 
 signals:
     void newOAuth(QString path, QVariantMap receivedData);
+    void failedOAuth(QString source);
 
 private slots:
     void newConnection();
@@ -55,6 +56,7 @@ private:
     void answerClient404(QTcpSocket *socket);
     void answerClientTwitchFragmentToQuery(QTcpSocket *socket);
     void answerClientTwitchAJAX(QTcpSocket *socket);
+    void answerClientTwitchError(QTcpSocket *socket);
 
     void emitQuery(const QUrl &url);
 

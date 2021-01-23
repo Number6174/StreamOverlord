@@ -68,14 +68,28 @@ void OAuthHTTPServer::readyRead(QTcpSocket *socket) {
 
 void OAuthHTTPServer::answerClient(QTcpSocket *socket, const QUrl &url) {
     logger->info("Request {}", url.path().toStdString());
-    if (url.path() == "/twitchoauth" && !url.hasQuery()) {
-        // What we want is currently a fragment in the URL
-        logger->info("Sending AJAX callback");
-        answerClientTwitchFragmentToQuery(socket);
+    if (url.path() == "/twitchoauth") {
+        if (!url.hasQuery()) {
+            // What we want is currently a fragment in the URL
+            logger->info("Sending Twitch AJAX callback");
+            answerClientTwitchFragmentToQuery(socket);
+        } else {
+            // An error occurred
+            logger->warn("Received OAuth error from Twitch");
+
+            const QUrlQuery query(url.query());
+            const auto items = query.queryItems();
+            logger->debug("Received in URL Query:");
+            for (const auto &item : items)
+                logger->debug("{}: {}", item.first.toStdString(), item.second.toStdString());
+
+            answerClientTwitchError(socket);
+            emit failedOAuth("Twitch");
+        }
     } else if (url.path() == "/twitchoauthajax") {
         // Received fragment as AJAX request
         // Process query
-        logger->info("Received AJAX callback");
+        logger->info("Received Twitch AJAX callback");
         answerClientTwitchAJAX(socket);
         emitQuery(url);
     } else {
@@ -129,6 +143,17 @@ void OAuthHTTPServer::answerClientTwitchFragmentToQuery(QTcpSocket *socket) {
 
 void OAuthHTTPServer::answerClientTwitchAJAX(QTcpSocket *socket) {
     const QByteArray message = QByteArrayLiteral("is complete. You may now close this window.");
+    answerClient200(socket, message);
+}
+
+void OAuthHTTPServer::answerClientTwitchError(QTcpSocket *socket) {
+    const QByteArray message =
+            QByteArrayLiteral("<html><head><title>")
+            + qApp->applicationName().toUtf8()
+            + QByteArrayLiteral("</title></head><body>"
+                                "OAuth failed. Please attempt to re-obtain a token."
+                                "</body></html>");
+
     answerClient200(socket, message);
 }
 

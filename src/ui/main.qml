@@ -8,7 +8,6 @@ import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.1
 
 import StreamOverlord 1.0
-//import AboutDialog
 
 ApplicationWindow {
     id: window
@@ -88,4 +87,16 @@ ApplicationWindow {
             model: EventModel {}
         }
 */
+
+    WarningDialog {
+        id: warningDialog
+    }
+
+    Connections{
+        target: Backend
+        function onWarningDialog(message) {
+            warningDialog.text = message
+            warningDialog.open()
+        }
+    }
 }

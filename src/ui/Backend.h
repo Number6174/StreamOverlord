@@ -41,11 +41,13 @@ signals:
     void logDirectoryChanged(QString newDir);
     void configDirectoryChanged(QString newDir);
     void twitchTokenChanged(QString newToken);
+    void warningDialog(QString message);
 
 public slots:
     void setLogDirectory(QString newDir);
     void setConfigDirectory(QString newDir);
     void setTwitchToken(QString newToken);
+    void handleOAuthError(QString message);
 
 private:
 
