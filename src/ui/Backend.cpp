@@ -18,12 +18,12 @@ Backend::Backend(QObject *parent) : QObject(parent), m_twitchTokenManager(&m_net
     readConfiguration();
 
     // Wire up Twitch::TokenManager
-    connect(&m_network, SIGNAL(newOAuth(QString, QVariantMap)),
-            &m_twitchTokenManager, SLOT(newOAuth(QString, QVariantMap)));
-    connect(&m_twitchTokenManager, SIGNAL(accessTokenChanged(QString)),
-            this, SIGNAL(twitchTokenChanged(QString)));
-    connect(&m_network, SIGNAL(failedOAuth(QString)),
-            this, SLOT(handleOAuthError(QString)));
+    connect(&m_network, &NetworkManager::newOAuth,
+            &m_twitchTokenManager, &Twitch::TokenManager::newOAuth);
+    connect(&m_twitchTokenManager, &Twitch::TokenManager::accessTokenChanged,
+            this, &Backend::twitchTokenChanged);
+    connect(&m_network, &NetworkManager::failedOAuth,
+            this, &Backend::handleOAuthError);
 }
 
 Q_INVOKABLE QString Backend::convertURLtoPath(const QUrl& url) const {

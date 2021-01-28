@@ -8,8 +8,8 @@
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent),
                                                   oAuthServer(new OAuthHTTPServer(this)) {
     // Signal to Signal
-    connect(oAuthServer, SIGNAL(newOAuth(QString, QVariantMap)),
-            this, SIGNAL(newOAuth(QString, QVariantMap)));
-    connect(oAuthServer, SIGNAL(failedOAuth(QString)),
-            this, SIGNAL(failedOAuth(QString)));
+    connect(oAuthServer, &OAuthHTTPServer::newOAuth,
+            this, &NetworkManager::newOAuth);
+    connect(oAuthServer, &OAuthHTTPServer::failedOAuth,
+            this, &NetworkManager::failedOAuth);
 }
