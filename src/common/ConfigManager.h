@@ -4,6 +4,7 @@
 #ifndef STREAMOVERLORD_CONFIGMANAGER_H
 #define STREAMOVERLORD_CONFIGMANAGER_H
 
+#include <QJsonDocument>
 #include <QString>
 
 namespace Common {
@@ -17,6 +18,7 @@ namespace Common {
         InvalidFormat
     };
     LoadTokenResult loadTokenStorage(TokenStorage &ts);
+    LoadTokenResult processTokenJSON(const QJsonDocument &contents, TokenStorage &ts);
 
     enum class WriteTokenResult {
         Success,

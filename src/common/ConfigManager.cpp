@@ -11,8 +11,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <QDebug>
-
 Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
     auto logger = spdlog::get("config");
     // Determine the file to load using the config directory from QSettings
@@ -37,11 +35,11 @@ Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
     auto contents = file.readAll();
     file.close();
 
-    // Process the contents
-    QJsonParseError jsonParseError;
+    // Validate it as JSON
+    QJsonParseError jsonParseError{};
     auto doc = QJsonDocument::fromJson(contents, &jsonParseError);
 
-    if (doc.isEmpty()) {
+    if (doc.isEmpty() || jsonParseError.error != QJsonParseError::NoError) {
         logger->info("Parse error: {}", jsonParseError.errorString().toStdString());
         return LoadTokenResult::InvalidFormat;
     }
@@ -51,16 +49,23 @@ Common::LoadTokenResult Common::loadTokenStorage(Common::TokenStorage &ts) {
         return LoadTokenResult::InvalidFormat;
     }
 
+
+    // Process the contents
+    return processTokenJSON(doc, ts);
+}
+
+Common::LoadTokenResult Common::processTokenJSON(const QJsonDocument &doc, TokenStorage &ts) {
+    auto logger = spdlog::get("config");
+
     auto obj = doc.object();
 
     // Load Twitch key
     auto twitch = obj["twitch"];
     if (twitch.isUndefined()) {
         logger->info("Twitch token not present");
-        return LoadTokenResult::InvalidFormat;
+    } else {
+        ts.twitchAccessToken = twitch.toString();
     }
-    ts.twitchAccessToken = twitch.toString();
-
 
     // Done
     return LoadTokenResult::Success;
