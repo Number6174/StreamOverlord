@@ -22,7 +22,7 @@ include(GetSpdlog)
 include(GetGoogletest)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Quick Network NetworkAuth REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Quick Network REQUIRED)
 
 # Project directories
 add_subdirectory(src)
